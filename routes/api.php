@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Api\LabelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,8 @@ Route::group(['prefix' => '/task'], function () {
     Route::get('/{id}', [TaskController::class, 'getById']);
     Route::post('/create', [TaskController::class, 'create']);
     Route::delete('/{id}', [TaskController::class, 'delete']);
+});
+
+Route::group(['prefix' => '/label'], function () {
+    Route::post('/create', [LabelController::class, 'create']);
 });
