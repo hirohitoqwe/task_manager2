@@ -25,4 +25,5 @@ Route::group(['prefix' => '/task'], function () {
 
 Route::group(['prefix' => '/label'], function () {
     Route::post('/create', [LabelController::class, 'create']);
+    Route::delete('/{id}', [LabelController::class, 'delete']);
 });
