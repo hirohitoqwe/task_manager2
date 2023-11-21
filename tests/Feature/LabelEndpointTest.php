@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Label;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
@@ -9,6 +10,9 @@ use Tests\TestCase;
 
 class LabelEndpointTest extends TestCase
 {
+
+    use RefreshDatabase;
+
     private const TEST_NAME = 'label_test';
 
     /**
@@ -22,4 +26,14 @@ class LabelEndpointTest extends TestCase
         ]);
         $response->assertStatus(Response::HTTP_CREATED);
     }
+
+    public function testDeleteLabel()
+    {
+        Label::factory()->create();
+        $count = Label::all()->count();
+        $response = $this->delete('/api/label/' . Label::all()->last()->id);
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertEquals(Label::all()->count(), $count - 1);
+    }
+
 }
