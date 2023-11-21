@@ -19,4 +19,10 @@ class LabelController extends Controller
         ]);
         return response()->json([], Response::HTTP_CREATED);
     }
+
+    public function delete(int $id)
+    {
+        Label::destroy($id);
+        return response()->json([], Response::HTTP_OK);
+    }
 }

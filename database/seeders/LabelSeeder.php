@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Task;
+use App\Models\Label;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+class LabelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Task::factory()->create(10);
+        Label::factory()->create(10);
     }
 }
