@@ -18,6 +18,11 @@ class TaskController extends Controller
     public function getById(int $id)
     {
         $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json([], Response::HTTP_NO_CONTENT);
+        }
+
         return response()->json($task, Response::HTTP_OK);
     }
 

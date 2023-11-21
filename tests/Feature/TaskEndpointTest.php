@@ -63,9 +63,8 @@ class TaskEndpointTest extends TestCase
     {
         Task::factory()->create();
         $model = Task::all()->last();
-        $response = $this->get('/api/task/' . ($model->id+1));
-        $response->assertStatus(Response::HTTP_OK);
-        $this->assertEquals($model->title, json_decode($response->getContent())->title);
+        $response = $this->get('/api/task/' . ($model->id + 1));
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     public function testDeleteEndpoint()
