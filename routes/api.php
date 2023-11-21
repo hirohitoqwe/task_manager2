@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\LabelController;
+use \App\Http\Controllers\Api\AssignController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,5 @@ Route::group(['prefix' => '/task'], function () {
 Route::group(['prefix' => '/label'], function () {
     Route::post('/create', [LabelController::class, 'create']);
 });
+
+Route::post('/assign/{labelId}/{taskId}', [AssignController::class, 'assignLabelToTask']);

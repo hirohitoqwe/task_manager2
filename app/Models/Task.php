@@ -18,4 +18,11 @@ class Task extends Model
         'title',
         'description'
     ];
+
+    public function labels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Label::class, 'tasks_labels',
+            'task_id', 'label_id');
+    }
+
 }

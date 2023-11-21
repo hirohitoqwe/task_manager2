@@ -17,12 +17,6 @@ class TaskEndpointTest extends TestCase
      * A basic test example.
      */
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        Artisan::call('migrate');
-    }
-
     public function testGetEndpoint(): void
     {
         $response = $this->get('/api/task');

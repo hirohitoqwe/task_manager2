@@ -11,12 +11,6 @@ class LabelEndpointTest extends TestCase
 {
     private const TEST_NAME = 'label_test';
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        Artisan::call('migrate');
-    }
-
     /**
      * A basic feature test example.
      */

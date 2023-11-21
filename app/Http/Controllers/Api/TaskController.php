@@ -11,13 +11,12 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
-        return response()->json($tasks, Response::HTTP_OK);
+        return response()->json(Task::with('labels')->get(), Response::HTTP_OK);
     }
 
     public function getById(int $id)
     {
-        $task = Task::find($id);
+        $task = Task::find($id)->with('labels')->first();
         return response()->json($task, Response::HTTP_OK);
     }
 
