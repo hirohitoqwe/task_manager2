@@ -16,7 +16,7 @@ class TaskController extends Controller
 
     public function getById(int $id)
     {
-        $task = Task::find($id)->with('labels')->first();
+        $task = Task::find($id)?->with('labels')->first();
         if (!$task) {
             return response()->json([], Response::HTTP_NO_CONTENT);
         }

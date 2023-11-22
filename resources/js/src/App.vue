@@ -1,16 +1,18 @@
 <script>
+
 export default {
     name: "App",
-    data() {
-        return {
-            name: "Isaac"
-        }
-    }
 }
 </script>
 
 <template>
-    <h3>Hi! {{ this.name }}</h3>
+    <div>
+        <router-link :to="{name:'home'}">List</router-link>
+        <router-link :to="{name:'registration'}">Registration</router-link>
+        <router-link :to="{name:'login'}">Login</router-link>
+
+        <router-view></router-view>
+    </div>
 </template>
 
 <style scoped>
