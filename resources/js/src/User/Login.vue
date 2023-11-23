@@ -17,7 +17,6 @@ export default {
                 password: this.password
             }).then(r => {
                 localStorage.setItem('token', r.data.access_token)
-                useRouter().push({})
                 console.log(r);
             })
         }
