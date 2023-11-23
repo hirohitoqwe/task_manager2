@@ -12,9 +12,6 @@ export default {
                 localStorage.removeItem('token');
             });
         },
-        check() {
-            return localStorage.getItem('token');
-        }
     }
 }
 </script>
@@ -24,7 +21,7 @@ export default {
         <router-link :to="{name:'home'}">List</router-link>
         <router-link :to="{name:'registration'}">Registration</router-link>
         <router-link :to="{name:'login'}">Login</router-link>
-        <button v-if="check" v-on:click="logout">Logout</button>
+        <button v-on:click="logout">Logout</button>
         <router-view></router-view>
     </div>
 </template>
