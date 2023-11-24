@@ -1,8 +1,9 @@
 <script lang="ts">
 
 import axios from "axios";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
     name: "App",
     methods: {
         logout: () => {
@@ -15,7 +16,7 @@ export default {
             });
         }
     }
-}
+});
 </script>
 
 <template>
