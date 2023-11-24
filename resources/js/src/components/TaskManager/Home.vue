@@ -1,9 +1,10 @@
 <script>
 import Header from "./Header.vue";
+import Task from "./Task.vue";
 
 export default {
     name: "Home",
-    components: {Header},
+    components: {Task, Header},
     methods: {
     }
 }
@@ -11,6 +12,7 @@ export default {
 
 <template>
     <Header/>
+    <Task />
 </template>
 
 <style scoped>

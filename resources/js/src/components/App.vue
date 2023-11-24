@@ -1,9 +1,13 @@
 <script lang="ts">
 
 import {defineComponent} from "vue";
+import router from "../../router";
 
 export default defineComponent({
     name: "App",
+    mounted() {
+        router.push("/home");
+    }
 });
 </script>
 
@@ -14,5 +18,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-
+body{
+    margin: 0;
+}
 </style>
