@@ -23,8 +23,9 @@ API POST
 - Laravel 10
 - MySQL
 - Vue 3
-- Vuex
+- TypeScript
 - Vue-Router
+- Vuex
 - Laravel Sail
 
 ### Как запустить проект?

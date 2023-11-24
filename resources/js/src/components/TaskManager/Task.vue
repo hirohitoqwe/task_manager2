@@ -25,11 +25,15 @@ export default defineComponent({
 </script>
 
 <template>
-    <h1>Список задач</h1>
-    <div class="task-item" v-for="task in this.tasks">
-        <h1>{{ task.title }}</h1>
-        <div class="labels" v-for="label in task.labels">
-            {{ label.name }}
+    <div class="content">
+        <div><h1>Список задач</h1></div>
+        <div class="task-item" v-for="task in this.tasks">
+            <h4>{{ task.title }}</h4>
+            <div class="label" v-for="label in task.labels">
+                <div class="label_{{label.id}}">
+                    {{ label.name }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -37,15 +41,9 @@ export default defineComponent({
 <style scoped>
 
 .task-item {
-    margin-bottom: 10px;
+    display: block; /* каждый элемент как блок */
 }
-
-.add-label input[type="text"] {
-    padding: 5px;
-    width: 150px;
-}
-
-.add-label input[type="submit"] {
-    padding: 5px 10px;
+.label_*{
+    border: 1px solid;
 }
 </style>
