@@ -3,13 +3,13 @@ import './bootstrap';
 import {createApp} from 'vue';
 import App from "./src/App.vue";
 import Home from "./src/Home.vue";
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory, Router, RouterHistory} from 'vue-router'
 import Login from "./src/User/Login.vue";
 import Registration from "./src/User/Registration.vue";
 
-const routerHistory = createWebHistory()
+const routerHistory: RouterHistory = createWebHistory()
 
-const router = new createRouter({
+const router: Router = new createRouter({
     history: routerHistory,
     routes: [
         {
@@ -31,7 +31,7 @@ const router = new createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'login' && to.name!== 'registration' && localStorage.getItem('token') == null) {
+    if (to.name !== 'login' && to.name !== 'registration' && localStorage.getItem('token') == null) {
         return next({
             name: 'login'
         });

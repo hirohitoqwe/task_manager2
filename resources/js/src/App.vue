@@ -1,17 +1,19 @@
-<script>
+<script lang="ts">
+
+import axios from "axios";
 
 export default {
     name: "App",
     methods: {
-        logout() {
+        logout: () => {
             axios.post('/api/auth/logout', {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then(r => {
+            }).then((r: Response) => {
                 localStorage.removeItem('token');
             });
-        },
+        }
     }
 }
 </script>
