@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Label;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class LabelEndpointTest extends TestCase
@@ -35,5 +34,4 @@ class LabelEndpointTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals(Label::all()->count(), $count - 1);
     }
-
 }
