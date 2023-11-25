@@ -9,9 +9,15 @@ export default defineComponent({
     data() {
         return {
             tasks: [] as Task[],
+            showFull: Task as null
         }
     },
-    mounted: function () {
+    methods: {
+        getFullDescription(task: Task) {
+            this.showFull = task;
+        }
+    },
+    mounted() {
         axios.get(constants.GET_TASK, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -28,22 +34,31 @@ export default defineComponent({
     <div class="content">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">
-            <h4>{{ task.title }}</h4>
+            <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}</a>
             <div class="label" v-for="label in task.labels">
                 <div class="label_{{label.id}}">
-                    {{ label.name }}
+                    <h5>{{ label.name }}</h5>
                 </div>
             </div>
+        </div>
+        <div class="task-full" v-if="this.showFull">
+            <h1>{{ showFull.description }}</h1>
         </div>
     </div>
 </template>
 
 <style scoped>
 
-.task-item {
-    display: block; /* каждый элемент как блок */
+a {
+    text-decoration: none;
+    color: #1a202c;
 }
-.label_*{
+
+.task-item {
+    display: block;
+}
+
+.label_ * {
     border: 1px solid;
 }
 </style>

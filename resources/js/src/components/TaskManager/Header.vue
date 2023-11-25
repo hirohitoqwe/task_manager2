@@ -18,7 +18,7 @@ export default defineComponent({
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((r: Response) => {
+            }).finally(() => {
                 localStorage.removeItem('token');
                 router.push({name: "login"});
             });
