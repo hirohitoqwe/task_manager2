@@ -62,4 +62,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     *Return user team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function team(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Team::class);
+    }
+
 }
