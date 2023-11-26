@@ -29,5 +29,4 @@ class Task extends Model
         return $this->belongsToMany(Label::class, 'tasks_labels',
             'task_id', 'label_id');
     }
-
 }

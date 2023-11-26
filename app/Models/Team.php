@@ -13,4 +13,16 @@ class Team extends Model
         'name',
         'code'
     ];
+
+    /**
+     * Get users of team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'tasks_labels',
+            'team_id', 'user_id');
+    }
+
 }

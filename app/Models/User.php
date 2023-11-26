@@ -64,13 +64,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     *Return user team
+     * Return user team
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function team(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasOne(Team::class);
+        return $this->belongsToMany(Team::class, 'teams_users', 'user_id', 'team_id');
     }
-
 }
