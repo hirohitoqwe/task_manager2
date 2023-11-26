@@ -30,6 +30,8 @@ class TaskController extends Controller
         Task::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'user_id' => $validated['user_id'] ?? null,
+            'team_id' => $validated['team_id'] ?? null
         ]);
 
         return response()->json([], Response::HTTP_CREATED);

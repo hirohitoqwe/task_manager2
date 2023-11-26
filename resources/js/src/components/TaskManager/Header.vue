@@ -1,17 +1,12 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import axios from "axios";
-import constants from "../../constants"
-import Me from "../../entities/Me";
+import constants from "../../constants";
 import router from "../../../router";
 
 export default defineComponent({
     name: "Header",
-    data() {
-        return {
-            me: Me
-        }
-    },
+    props:['me'],
     methods: {
         logout: () => {
             axios.post(constants.LOGOUT, {}, {
@@ -24,22 +19,13 @@ export default defineComponent({
             });
         }
     },
-    mounted() {
-        axios.post(constants.ME, {}, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then((r) => {
-            this.me = r.data;
-        });
-    }
 })
 </script>
 
 <template>
     <header>
-        <div class="logo">Т2Т</div>
         <div class="user">{{ me.name }}</div>
+        <div class="logo">Т2Т</div>
         <div class="dropdown">
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">

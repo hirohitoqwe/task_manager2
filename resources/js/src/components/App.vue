@@ -5,9 +5,6 @@ import router from "../../router";
 
 export default defineComponent({
     name: "App",
-    mounted() {
-        router.push("/home");
-    }
 });
 </script>
 

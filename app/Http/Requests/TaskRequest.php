@@ -23,7 +23,9 @@ class TaskRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'string'
+            'description' => 'string',
+            'user_id' => 'integer',
+            'team_id' => 'integer'
         ];
     }
 }
