@@ -24,7 +24,6 @@ export default defineComponent({
             }
         }).then(r => {
             this.tasks = r.data;
-            console.log(this.tasks);
         })
     }
 })

@@ -6,7 +6,7 @@ import router from "../../router";
 
 export default defineComponent({
     name: "Header",
-    props:['me'],
+    props: ['me'],
     methods: {
         logout: () => {
             axios.post(constants.LOGOUT, {}, {
@@ -29,7 +29,9 @@ export default defineComponent({
         <div class="dropdown">
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
-                <a href="#" v-for="team in me.teams">{{team.name}}</a>
+                <div v-for="team in me.teams">
+                    <a :href="'/team/'+team.id">{{ team.name }}</a>
+                </div>
             </div>
         </div>
         <button class="logout" v-on:click="logout">Выйти</button>

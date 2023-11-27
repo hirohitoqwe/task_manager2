@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, Router, RouterHistory} from "vue-router"
 import Home from "./src/components/TaskManager/Home.vue";
 import Login from "./src/components/Auth/Login.vue";
 import Registration from "./src/components/Auth/Registration.vue";
+import Team from "./src/components/Teams/Team.vue";
 
 const routerHistory: RouterHistory = createWebHistory()
 
@@ -22,6 +23,11 @@ const router: Router = new createRouter({
             path: '/user/registration',
             name: 'registration',
             component: Registration
+        },
+        {
+            path:'/team/:id',
+            name:'teams',
+            component: Team
         }
     ],
 });
