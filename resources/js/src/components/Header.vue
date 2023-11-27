@@ -1,8 +1,8 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import axios from "axios";
-import constants from "../../constants";
-import router from "../../../router";
+import constants from "../constants";
+import router from "../../router";
 
 export default defineComponent({
     name: "Header",
@@ -24,13 +24,12 @@ export default defineComponent({
 
 <template>
     <header>
-        <div class="user">{{ me.name }}</div>
         <div class="logo">Т2Т</div>
+        <div class="user">{{ me.name }}</div>
         <div class="dropdown">
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
-                <a href="#">Команда 1</a>
-                <a href="#">Команда 2</a>
+                <a href="#" v-for="team in me.teams">{{team.name}}</a>
             </div>
         </div>
         <button class="logout" v-on:click="logout">Выйти</button>

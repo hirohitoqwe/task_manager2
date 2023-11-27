@@ -20,24 +20,19 @@ class TeamController extends Controller
 
     public function getById(int $id)
     {
-        return response()->json(Team::where('id', '=', $id)->first(), Response::HTTP_OK);
-    }
-
-    public function getTasks(int $id)
-    {
-        return response()->json(Task::where('team_id', '=', $id)->get(), Response::HTTP_OK);
+        return response()->json(Team::with('users', 'tasks')->find($id), Response::HTTP_OK);
     }
 
     public function create(TeamRequest $request)
     {
         $validated = $request->validated();
-        try{
+        try {
             Team::create([
                 'name' => $validated['name'],
                 'code' => $this->service->createCode($validated['name'])
             ]);
             return response()->json([], Response::HTTP_CREATED);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

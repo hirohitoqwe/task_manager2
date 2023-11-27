@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -40,7 +39,8 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        return response()->json(User::with('teams')->find($user->id));
     }
 
     /**

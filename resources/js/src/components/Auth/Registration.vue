@@ -25,8 +25,6 @@ export default defineComponent({
             }).then(r => {
                 console.log('success register', r)
                 router.push({name: 'login'});
-            }).catch(err => {
-               console.log(this.email)
             });
         }
     }

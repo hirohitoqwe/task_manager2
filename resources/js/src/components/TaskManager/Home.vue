@@ -1,5 +1,5 @@
 <script lang="ts">
-import Header from "./Header.vue";
+import Header from "../Header.vue";
 import Task from "./Task.vue";
 import Me from "../../entities/Me.js";
 import {defineComponent} from "vue";

@@ -24,4 +24,14 @@ class Team extends Model
         return $this->belongsToMany(User::class, 'teams_users',
             'team_id', 'user_id');
     }
+
+    /**
+     * Get tasks of team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

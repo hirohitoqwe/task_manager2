@@ -45,7 +45,6 @@ Route::post('/assign/{labelId}/{taskId}', [AssignController::class, 'assignLabel
 
 Route::group(['prefix' => 'team'], function () {
     Route::get('/{id}', [TeamController::class, 'getById']);
-    Route::get('/getTasks/{teamId}', [TeamController::class, 'getTasks']);
     Route::post('/create', [TeamController::class, 'create']);
     Route::get('/invite/{code}', [TeamController::class, 'invite']);
     Route::post('/leave', [TeamController::class, 'leave']);
