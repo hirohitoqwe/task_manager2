@@ -1,20 +1,19 @@
 <script lang="ts">
-
+import Task from "./TaskManager/Task.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
-    name: "App",
+    name: "Home",
+    components: {Task},
+    data() {
+    },
 });
 </script>
 
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+    <Task/>
 </template>
 
 <style scoped>
-body {
-    margin: 0;
-}
+
 </style>

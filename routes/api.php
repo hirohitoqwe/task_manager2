@@ -1,12 +1,13 @@
 <?php
 
 
+use App\Http\Controllers\Api\AssignController;
+use App\Http\Controllers\Api\LabelController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\LabelController;
-use \App\Http\Controllers\Api\AssignController;
-use \App\Http\Controllers\RegisterController;
-use \App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,10 @@ Route::group(['prefix' => '/label'], function () {
 });
 
 Route::post('/assign/{labelId}/{taskId}', [AssignController::class, 'assignLabelToTask']);
+
+Route::group(['prefix' => 'team'], function () {
+    Route::get('/{id}', [TeamController::class, 'getById']);
+    Route::post('/create', [TeamController::class, 'create']);
+    Route::get('/invite/{code}', [TeamController::class, 'invite']);
+    Route::post('/leave', [TeamController::class, 'leave']);
+});

@@ -1,15 +1,16 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import axios from "axios";
-import constants from "../../constants"
-import Me from "../../entities/Me";
-import router from "../../../router";
+import constants from "../constants";
+import router from "../../router";
+import Me from "../entities/Me";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
     name: "Header",
     data() {
         return {
-            me: Me
+            me: Me,
         }
     },
     methods: {
@@ -22,7 +23,7 @@ export default defineComponent({
                 localStorage.removeItem('token');
                 router.push({name: "login"});
             });
-        }
+        },
     },
     mounted() {
         axios.post(constants.ME, {}, {
@@ -32,19 +33,22 @@ export default defineComponent({
         }).then((r) => {
             this.me = r.data;
         });
-    }
+    },
 })
 </script>
 
 <template>
-    <header>
-        <div class="logo">Т2Т</div>
+    <header v-if="!$route.meta.hideNavigation">
+        <router-link to="/home">
+            <div class="logo">Т2Т</div>
+        </router-link>
         <div class="user">{{ me.name }}</div>
         <div class="dropdown">
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
-                <a href="#">Команда 1</a>
-                <a href="#">Команда 2</a>
+                <div v-for="team in me.teams">
+                    <router-link :to="`/team/${team.id}`">{{ team.name }}</router-link>
+                </div>
             </div>
         </div>
         <button class="logout" v-on:click="logout">Выйти</button>
@@ -110,5 +114,8 @@ header {
     display: block;
 }
 
+a {
+    text-decoration: none;
+}
 
 </style>

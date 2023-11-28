@@ -3,12 +3,14 @@ import {defineComponent} from 'vue'
 import Task from "../../entities/Task";
 import axios from "axios";
 import constants from "../../constants"
+import Header from "../Header.vue";
 
 export default defineComponent({
     name: "Task",
+    components: {Header},
     data() {
         return {
-            tasks: [] as Task[],
+            tasks: Array<Task>,
             showFull: Task as null
         }
     },
@@ -24,13 +26,13 @@ export default defineComponent({
             }
         }).then(r => {
             this.tasks = r.data;
-            console.log(this.tasks);
         })
     }
 })
 </script>
 
 <template>
+    <Header/>
     <div class="content">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">

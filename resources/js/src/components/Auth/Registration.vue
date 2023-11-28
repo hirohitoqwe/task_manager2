@@ -8,10 +8,10 @@ export default defineComponent({
     name: "Registration",
     data() {
         return {
-            name: "test",
-            email: "test",
-            password: "test",
-            password_confirmation: "test"
+            name: null,
+            email: null,
+            password: null,
+            password_confirmation: null
         }
     },
 
@@ -24,8 +24,8 @@ export default defineComponent({
                 password_confirmation: this.password_confirmation
             }).then(r => {
                 console.log('success register', r)
-                router.push({name: 'login'});
-            })
+                router.push({name: 'login', reload: true},);
+            });
         }
     }
 });
@@ -36,19 +36,19 @@ export default defineComponent({
         <form>
             <div class="form-field">
                 <label for="username">Имя пользователя:</label>
-                <input type="text" id="username" v-on="name" name="username">
+                <input type="text" id="username" v-model="name" name="username">
             </div>
             <div class="form-field">
                 <label for="email">Email:</label>
-                <input type="email" v-on="email" id="email" name="email">
+                <input type="email" v-model="email" id="email" name="email">
             </div>
             <div class="form-field">
                 <label for="password">Пароль:</label>
-                <input type="password" v-on="password" id="password" name="password">
+                <input type="password" v-model="password" id="password" name="password">
             </div>
             <div class="form-field">
                 <label for="confirm-password">Подтверждение пароля:</label>
-                <input type="password" v-on="password_confirmation" id="confirm-password" name="confirm-password">
+                <input type="password" v-model="password_confirmation" id="confirm-password" name="confirm-password">
             </div>
             <button v-on:click.prevent="registration" class="register-button">Зарегистрироваться</button>
         </form>

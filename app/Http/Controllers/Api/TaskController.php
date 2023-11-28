@@ -11,12 +11,13 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return response()->json(Task::with('labels')->get(), Response::HTTP_OK);
+        return response()->json(Task::with('labels')->where('user_id', auth()->user()->id)->get(),
+            Response::HTTP_OK);
     }
 
     public function getById(int $id)
     {
-        $task = Task::find($id)?->with('labels')->first();
+        $task = Task::with('labels')->find($id);
         if (!$task) {
             return response()->json([], Response::HTTP_NO_CONTENT);
         }
@@ -30,6 +31,8 @@ class TaskController extends Controller
         Task::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'user_id' => $validated['user_id'] ?? null,
+            'team_id' => $validated['team_id'] ?? null
         ]);
 
         return response()->json([], Response::HTTP_CREATED);
