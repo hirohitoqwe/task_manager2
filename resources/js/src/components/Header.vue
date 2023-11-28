@@ -3,10 +3,16 @@ import {defineComponent} from 'vue'
 import axios from "axios";
 import constants from "../constants";
 import router from "../../router";
+import Me from "../entities/Me";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
     name: "Header",
-    props: ['me'],
+    data() {
+        return {
+            me: Me,
+        }
+    },
     methods: {
         logout: () => {
             axios.post(constants.LOGOUT, {}, {
@@ -17,20 +23,31 @@ export default defineComponent({
                 localStorage.removeItem('token');
                 router.push({name: "login"});
             });
-        }
+        },
+    },
+    mounted() {
+        axios.post(constants.ME, {}, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((r) => {
+            this.me = r.data;
+        });
     },
 })
 </script>
 
 <template>
-    <header>
-        <div class="logo">Т2Т</div>
+    <header v-if="!$route.meta.hideNavigation">
+        <router-link to="/home">
+            <div class="logo">Т2Т</div>
+        </router-link>
         <div class="user">{{ me.name }}</div>
         <div class="dropdown">
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
                 <div v-for="team in me.teams">
-                    <a :href="'/team/'+team.id">{{ team.name }}</a>
+                    <router-link :to="`/team/${team.id}`">{{ team.name }}</router-link>
                 </div>
             </div>
         </div>
@@ -97,5 +114,8 @@ header {
     display: block;
 }
 
+a {
+    text-decoration: none;
+}
 
 </style>

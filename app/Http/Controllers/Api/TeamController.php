@@ -20,7 +20,9 @@ class TeamController extends Controller
 
     public function getById(int $id)
     {
-        return response()->json(Team::with('users', 'tasks')->find($id), Response::HTTP_OK);
+        $team = Team::find($id);
+        $tasks = Task::where('team_id', '=', $team->id)->with('labels')->get();
+        return response()->json(['team' => $team, 'tasks' => $tasks], Response::HTTP_OK);
     }
 
     public function create(TeamRequest $request)

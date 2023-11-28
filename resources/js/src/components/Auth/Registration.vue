@@ -24,7 +24,7 @@ export default defineComponent({
                 password_confirmation: this.password_confirmation
             }).then(r => {
                 console.log('success register', r)
-                router.push({name: 'login'});
+                router.push({name: 'login', reload: true},);
             });
         }
     }

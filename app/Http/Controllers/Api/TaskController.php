@@ -11,7 +11,8 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return response()->json(Task::with('labels')->get(), Response::HTTP_OK);
+        return response()->json(Task::with('labels')->where('user_id', auth()->user()->id)->get(),
+            Response::HTTP_OK);
     }
 
     public function getById(int $id)

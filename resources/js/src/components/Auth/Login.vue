@@ -18,9 +18,10 @@ export default defineComponent({
                 password: this.password
             }).then(r => {
                 localStorage.setItem('token', r.data.access_token)
-                console.log(r);
-                router.push({name: 'home'});
-            })
+                router.push({name: 'home', reload: true});
+            }).catch(err => {
+                router.go({name: 'login'});
+            });
         }
     }
 });

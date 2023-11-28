@@ -8,7 +8,7 @@ export default defineComponent({
     name: "Task",
     data() {
         return {
-            tasks: [] as Task[],
+            tasks: Array<Task>,
             showFull: Task as null
         }
     },
