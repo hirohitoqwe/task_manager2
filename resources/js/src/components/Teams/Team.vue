@@ -1,7 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import {useRoute} from "vue-router";
-import Header from "../Header.vue";
 import constants from "../../constants";
 import Team from "../../entities/Team";
 import axios from "axios";
