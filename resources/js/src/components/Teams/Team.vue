@@ -28,6 +28,7 @@ export default defineComponent({
 </script>
 
 <template>
+    <Header/>
     {{ useRoute().params.id }}
     <div v-for="task in info.tasks">
         {{ task.title }}

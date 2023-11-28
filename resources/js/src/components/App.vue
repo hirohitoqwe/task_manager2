@@ -5,13 +5,11 @@ import Header from "./Header.vue";
 
 export default defineComponent({
     name: "App",
-    components: {Header},
 });
 </script>
 
 <template>
     <div>
-        <Header/>
         <router-view></router-view>
     </div>
 </template>

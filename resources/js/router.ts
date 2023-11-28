@@ -10,7 +10,7 @@ const router: Router = new createRouter({
     history: routerHistory,
     routes: [
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: Home,
         },
@@ -18,13 +18,11 @@ const router: Router = new createRouter({
             path: '/user/login',
             name: 'login',
             component: Login,
-            meta: { hideNavigation: true }
         },
         {
             path: '/user/registration',
             name: 'registration',
             component: Registration,
-            meta: { hideNavigation: true }
         },
         {
             path: '/team/:id',
@@ -49,6 +47,5 @@ router.beforeEach((to, from, next) => {
     }
 
     next();
-
 })
 export default router;
