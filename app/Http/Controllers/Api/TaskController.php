@@ -28,14 +28,14 @@ class TaskController extends Controller
     public function create(TaskRequest $request)
     {
         $validated = $request->validated();
-        Task::create([
+        $created = Task::create([
             'title' => $validated['title'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? null,
             'user_id' => $validated['user_id'] ?? null,
             'team_id' => $validated['team_id'] ?? null
         ]);
 
-        return response()->json([], Response::HTTP_CREATED);
+        return response()->json($created, Response::HTTP_CREATED);
     }
 
     public function delete(int $id)
