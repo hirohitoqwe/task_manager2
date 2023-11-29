@@ -3,7 +3,7 @@ import {defineComponent} from 'vue'
 import {useRoute} from "vue-router";
 import constants from "../../constants";
 import Team from "../../entities/Team";
-import axios from "axios";
+import api from "../../../api";
 
 export default defineComponent({
     name: "Team",
@@ -14,7 +14,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get(constants.GET_TEAM + useRoute().params.id, {
+        api.get(constants.GET_TEAM + useRoute().params.id, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }

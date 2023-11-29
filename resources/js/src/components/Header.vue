@@ -1,10 +1,9 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import axios from "axios";
 import constants from "../constants";
 import router from "../../router";
 import Me from "../entities/Me";
-import {useRouter} from "vue-router";
+import api from "../../api";
 
 export default defineComponent({
     name: "Header",
@@ -15,7 +14,7 @@ export default defineComponent({
     },
     methods: {
         logout: () => {
-            axios.post(constants.LOGOUT, {}, {
+            api.post(constants.LOGOUT, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
@@ -26,7 +25,7 @@ export default defineComponent({
         },
     },
     mounted() {
-        axios.post(constants.ME, {}, {
+        api.post(constants.ME, {}, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +37,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <header v-if="!$route.meta.hideNavigation">
+    <header>
         <router-link to="/home">
             <div class="logo">Т2Т</div>
         </router-link>
