@@ -1,8 +1,8 @@
 <script lang="ts">
 
 import router from "../../../router.ts";
-import axios from "axios";
 import {defineComponent} from "vue";
+import api from "../../../api";
 
 export default defineComponent({
     name: "Registration",
@@ -17,7 +17,7 @@ export default defineComponent({
 
     methods: {
         registration: function () {
-            axios.post('/api/user/registration', {
+            api.post('/api/user/registration', {
                 name: this.name,
                 email: this.email,
                 password: this.password,

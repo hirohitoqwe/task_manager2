@@ -1,9 +1,9 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import Task from "../../entities/Task";
-import axios from "axios";
 import constants from "../../constants"
 import Header from "../Header.vue";
+import api from "../../../api";
 
 export default defineComponent({
     name: "Task",
@@ -20,7 +20,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get(constants.GET_TASK, {
+        api.get(constants.GET_TASK, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }

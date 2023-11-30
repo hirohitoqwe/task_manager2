@@ -1,7 +1,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import router from "../../../router.ts";
-import axios from "axios";
+import api from "../../../api";
 
 export default defineComponent({
     name: "Login",
@@ -13,13 +13,13 @@ export default defineComponent({
     },
     methods: {
         login: function () {
-            axios.post('/api/auth/login', {
+            api.post('/api/auth/login', {
                 email: this.email,
                 password: this.password
             }).then(r => {
                 localStorage.setItem('token', r.data.access_token)
                 router.push({name: 'home', reload: true});
-            }).catch(err => {
+            }).catch(() => {
                 router.go({name: 'login'});
             });
         }
