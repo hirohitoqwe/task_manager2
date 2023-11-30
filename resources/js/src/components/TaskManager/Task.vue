@@ -11,12 +11,20 @@ export default defineComponent({
     data() {
         return {
             tasks: Array<Task>,
-            showFull: Task as null
+            showFull: Task as null,
+            newTask: new Task()
         }
     },
     methods: {
         getFullDescription(task: Task) {
             this.showFull = task;
+        },
+        createTask() {
+            api.post(constants.CREATE_TASK, {
+                title: this.newTask.title
+            }).then((r) => {
+                console.log(r.data);
+            })
         }
     },
     mounted() {
@@ -46,6 +54,13 @@ export default defineComponent({
         <div class="task-full" v-if="this.showFull">
             <h1>{{ showFull.description }}</h1>
         </div>
+    </div>
+    <div class="create">
+        <div class="form-group">
+            <label for="taskName">Название задачи:</label>
+            <input type="text" id="taskName" v-model="newTask.title" required>
+        </div>
+        <button type="submit" v-on:click.prevent="createTask()">Создать задачу</button>
     </div>
 </template>
 
