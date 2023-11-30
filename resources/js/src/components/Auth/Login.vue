@@ -2,6 +2,7 @@
 import {defineComponent} from "vue";
 import router from "../../../router.ts";
 import api from "../../../api";
+import constants from "../../constants";
 
 export default defineComponent({
     name: "Login",
@@ -13,7 +14,7 @@ export default defineComponent({
     },
     methods: {
         login: function () {
-            api.post('/api/auth/login', {
+            api.post(constants.LOGIN, {
                 email: this.email,
                 password: this.password
             }).then(r => {
