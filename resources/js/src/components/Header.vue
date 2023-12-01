@@ -10,29 +10,51 @@ export default defineComponent({
     data() {
         return {
             me: Me,
+            isPopupOpen: false,
+            teamName: "",
         }
     },
     methods: {
         logout: () => {
-            api.post(constants.LOGOUT, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                }
-            }).finally(() => {
+            api.post(constants.LOGOUT).finally(() => {
                 localStorage.removeItem('token');
                 router.push({name: "login"});
             });
         },
+        openPopup() {
+            this.isPopupOpen = true;
+        },
+        closePopup() {
+            this.isPopupOpen = false;
+        },
+        saveTeam() {
+            api.post(constants.CREATE_TEAM, {
+                name: this.teamName
+            }).then(() => {
+                this.refreshMe()
+            });
+            this.closePopup();
+        },
+        leaveFromTeam(id: number) {
+            api.post(constants.LEAVE_TEAM, {
+                team_id: id
+            }).then(() => {
+                this.refreshMe()
+            });
+            console.log(`delete with ${id}`)
+        },
+        refreshMe() {
+            api.post(constants.ME).then((r) => {
+                this.me = r.data;
+            })
+        }
     },
     mounted() {
-        api.post(constants.ME, {}, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then((r) => {
+        api.post(constants.ME).then((r) => {
             this.me = r.data;
         });
-    },
+    }
+    ,
 })
 </script>
 
@@ -46,10 +68,29 @@ export default defineComponent({
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
                 <div v-for="team in me.teams">
-                    <router-link :to="`/team/${team.id}`">{{ team.name }}</router-link>
+                    <router-link :to="`/team/${team.id}`">
+                        <span style="display: inline-block">{{ team.name }}
+                        <a v-on:click.prevent="leaveFromTeam(team.id)">x</a></span>
+                    </router-link>
                 </div>
+                <a class="createTeam" v-on:click="openPopup">Создать команду</a>
             </div>
         </div>
+        <teleport to="body">
+            <div v-if="isPopupOpen" class="popup">
+                <div class="popup-content">
+                    <h2>Добавить команду</h2>
+
+                    <label for="teamName">Название команды:</label>
+                    <input v-model="teamName" type="text" id="teamName" placeholder="Введите название"/>
+
+                    <div class="button-container">
+                        <button class="save-button" @click="saveTeam">Сохранить</button>
+                        <button class="close-button" @click="closePopup">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </teleport>
         <button class="logout" v-on:click="logout">Выйти</button>
     </header>
 </template>
@@ -115,6 +156,95 @@ header {
 
 a {
     text-decoration: none;
+    cursor: pointer;
+}
+
+.createTeam {
+    color: #4CAF50;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.save-button,
+.close-button {
+    padding: 10px;
+    width: 100px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.save-button {
+    background-color: #4caf50;
+}
+
+.close-button {
+    background-color: #e74c3c;
+}
+
+.save-button:hover,
+.close-button:hover {
+    background-color: #45a049;
+}
+
+/* Анимация появления попапа */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+span {
+    display: inline-block; /* Добавим этот стиль, чтобы span не переходил на новую строку */
+    margin-right: 5px; /* Регулируйте отступ по вашему желанию */
 }
 
 </style>
