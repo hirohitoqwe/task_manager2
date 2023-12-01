@@ -31,7 +31,7 @@ class TaskController extends Controller
         $created = Task::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'user_id' => auth()->user()->getAuthIdentifier() ?? null,
+            'user_id' => $validated['user_id'] ?? null,
             'team_id' => $validated['team_id'] ?? null
         ]);
 

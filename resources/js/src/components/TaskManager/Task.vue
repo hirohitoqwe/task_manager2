@@ -21,7 +21,8 @@ export default defineComponent({
         },
         createTask() {
             api.post(constants.CREATE_TASK, {
-                title: this.newTask.title
+                title: this.newTask.title,
+                user_id: this.$refs.Header.me.id,
             }).then((r) => {
                 console.log(r.data);
             })
@@ -40,7 +41,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <Header/>
+    <Header ref="Header"/>
     <div class="content">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">
