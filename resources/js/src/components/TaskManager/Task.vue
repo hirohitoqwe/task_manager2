@@ -11,41 +11,69 @@ export default defineComponent({
     data() {
         return {
             tasks: Array<Task>,
-            showFull: Task as null
+            showFull: Task as null,
+            newTask: new Task()
         }
     },
     methods: {
         getFullDescription(task: Task) {
             this.showFull = task;
+        },
+        createTask() {
+            api.post(constants.CREATE_TASK, {
+                title: this.newTask.title,
+                user_id: this.$refs.Header.me.id,
+            }).then((r) => {
+                console.log(r.data);
+                this.updateTasksList();
+            })
+        },
+        updateTasksList() {
+            api.get(constants.GET_TASK, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(r => {
+                this.tasks = r.data;
+            })
+        },
+        deleteTask(id: number) {
+            api.delete(constants.DELETE_TASK + id).then(() => {
+                this.updateTasksList()
+            })
         }
     },
     mounted() {
-        api.get(constants.GET_TASK, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then(r => {
-            this.tasks = r.data;
-        })
+        this.updateTasksList();
     }
 })
 </script>
 
 <template>
-    <Header/>
+    <Header ref="Header"/>
     <div class="content">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">
-            <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}</a>
+            <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}
+                <a href="#" v-on:click.prevent="deleteTask(task.id)">x</a>
+            </a>
             <div class="label" v-for="label in task.labels">
                 <div class="label_{{label.id}}">
                     <h5>{{ label.name }}</h5>
                 </div>
             </div>
+
         </div>
         <div class="task-full" v-if="this.showFull">
             <h1>{{ showFull.description }}</h1>
         </div>
+    </div>
+    <div class="create">
+        <div class="form-group">
+            <label for="taskName">Название задачи:</label>
+            <input type="text" id="taskName" v-model="newTask.title" required>
+        </div>
+        <button type="submit" v-on:click.prevent="createTask()">Создать задачу</button>
     </div>
 </template>
 
