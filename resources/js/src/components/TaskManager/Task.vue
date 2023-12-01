@@ -25,17 +25,21 @@ export default defineComponent({
                 user_id: this.$refs.Header.me.id,
             }).then((r) => {
                 console.log(r.data);
+                this.updateTask();
+            })
+        },
+        updateTask() {
+            api.get(constants.GET_TASK, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(r => {
+                this.tasks = r.data;
             })
         }
     },
     mounted() {
-        api.get(constants.GET_TASK, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then(r => {
-            this.tasks = r.data;
-        })
+        this.updateTask();
     }
 })
 </script>
