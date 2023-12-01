@@ -6,7 +6,8 @@ const GET_TASK: string = "/api/task/";
 const DELETE_TASK: string = "api/task/";
 const CREATE_TASK: string = "/api/task/create";
 const GET_TEAM: string = "/api/team/";
-
+const CREATE_TEAM: string = "api/team/create";
+const LEAVE_TEAM: string = "api/team/leave"
 export default {
     LOGOUT: LOGOUT_ROUTE,
     LOGIN: LOGIN_ROUTE,
@@ -16,5 +17,7 @@ export default {
     GET_TEAM: GET_TEAM,
     CREATE_TASK: CREATE_TASK,
     DELETE_TASK: DELETE_TASK,
+    CREATE_TEAM: CREATE_TEAM,
+    LEAVE_TEAM: LEAVE_TEAM
 }
 

@@ -29,13 +29,14 @@ class TeamController extends Controller
     {
         $validated = $request->validated();
         try {
-            Team::create([
+            $team = Team::create([
                 'name' => $validated['name'],
                 'code' => $this->service->createCode($validated['name'])
             ]);
+            $team->users()->attach(auth()->user()->getAuthIdentifier());
             return response()->json([], Response::HTTP_CREATED);
         } catch (\Exception $exception) {
-            return response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['exception' => $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

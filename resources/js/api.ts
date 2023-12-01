@@ -7,7 +7,8 @@ api.interceptors.request.use(config => {
     if (localStorage.getItem('token')) {
         console.log("We have token");
         config.headers = {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            "Accept": "application/json"
         }
     }
     return config;
@@ -17,12 +18,13 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(config => {
     if (localStorage.getItem('token')) {
         config.headers = {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            "Accept": "application/json"
         }
     }
     return config;
 }, (error) => {
-    if (error.status.code === 401) {
+    if (error.response.status === 401) {
         localStorage.removeItem('token');
         router.push({name: 'login'});
     }

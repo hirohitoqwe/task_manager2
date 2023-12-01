@@ -3,6 +3,7 @@
 import router from "../../../router.ts";
 import {defineComponent} from "vue";
 import api from "../../../api";
+import constants from "../../constants";
 
 export default defineComponent({
     name: "Registration",
@@ -17,7 +18,7 @@ export default defineComponent({
 
     methods: {
         registration: function () {
-            api.post('/api/user/registration', {
+            api.post(constants.REGISTER, {
                 name: this.name,
                 email: this.email,
                 password: this.password,
