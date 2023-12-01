@@ -25,10 +25,10 @@ export default defineComponent({
                 user_id: this.$refs.Header.me.id,
             }).then((r) => {
                 console.log(r.data);
-                this.updateTask();
+                this.updateTasksList();
             })
         },
-        updateTask() {
+        updateTasksList() {
             api.get(constants.GET_TASK, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -36,10 +36,15 @@ export default defineComponent({
             }).then(r => {
                 this.tasks = r.data;
             })
+        },
+        deleteTask(id: number) {
+            api.delete(constants.DELETE_TASK + id).then(() => {
+                this.updateTasksList()
+            })
         }
     },
     mounted() {
-        this.updateTask();
+        this.updateTasksList();
     }
 })
 </script>
@@ -49,12 +54,15 @@ export default defineComponent({
     <div class="content">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">
-            <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}</a>
+            <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}
+                <a href="#" v-on:click.prevent="deleteTask(task.id)">x</a>
+            </a>
             <div class="label" v-for="label in task.labels">
                 <div class="label_{{label.id}}">
                     <h5>{{ label.name }}</h5>
                 </div>
             </div>
+
         </div>
         <div class="task-full" v-if="this.showFull">
             <h1>{{ showFull.description }}</h1>
