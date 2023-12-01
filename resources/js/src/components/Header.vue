@@ -68,9 +68,8 @@ export default defineComponent({
             <button class="dropbtn">Мои команды</button>
             <div class="dropdown-content">
                 <div v-for="team in me.teams">
-                    <router-link :to="`/team/${team.id}`">
-                        <span style="display: inline-block">{{ team.name }}
-                        <a v-on:click.prevent="leaveFromTeam(team.id)">x</a></span>
+                    <router-link tag="span" :to="`/team/${team.id}`" style="display: inline;">
+                        {{team.name}} <a href="#" v-on:click.prevent="leaveFromTeam(team.id)" style="display: inline;">x</a>
                     </router-link>
                 </div>
                 <a class="createTeam" v-on:click="openPopup">Создать команду</a>
