@@ -4,24 +4,24 @@ import Task from "../../entities/Task";
 import constants from "../../constants"
 import Header from "../Header.vue";
 import api from "../../../api";
+import TaskInfo from "./TaskInfo.vue";
 
 export default defineComponent({
     name: "Task",
-    components: {Header},
+    components: {TaskInfo, Header},
     data() {
         return {
             tasks: Array<Task>,
-            showFull: Task as null,
+            showFull: false,
+            fullTask: null,
             newTask: new Task()
         }
     },
     methods: {
-        getFullDescription(task: Task) {
-            this.showFull = task;
-        },
         createTask() {
             api.post(constants.CREATE_TASK, {
                 title: this.newTask.title,
+                description: this.newTask.description,
                 user_id: this.$refs.Header.me.id,
             }).then((r) => {
                 console.log(r.data);
@@ -34,6 +34,7 @@ export default defineComponent({
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
             }).then(r => {
+                this.newTask = new Task();
                 this.tasks = r.data;
             })
         },
@@ -41,7 +42,16 @@ export default defineComponent({
             api.delete(constants.DELETE_TASK + id).then(() => {
                 this.updateTasksList()
             })
-        }
+        },
+        getFullDescription(task) {
+            this.fullTask = task;
+            console.log(this.fullTask);
+            this.showFull = true;
+        },
+
+        closeFullDescription() {
+            this.showFull = false;
+        },
     },
     mounted() {
         this.updateTasksList();
@@ -51,7 +61,7 @@ export default defineComponent({
 
 <template>
     <Header ref="Header"/>
-    <div class="content">
+    <div class="content" :class="{ 'show-full': showFull }">
         <div><h1>Список задач</h1></div>
         <div class="task-item" v-for="task in this.tasks">
             <a href="#" v-on:click.prevent="getFullDescription(task)">{{ task.title }}</a>
@@ -61,16 +71,17 @@ export default defineComponent({
                     <h5>{{ label.name }}</h5>
                 </div>
             </div>
-
-        </div>
-        <div class="task-full" v-if="this.showFull">
-            <h1>{{ showFull.description }}</h1>
+            <div class="task-full" v-if="showFull">
+                <TaskInfo v-bind:full-task="fullTask" @close="closeFullDescription">
+                </TaskInfo>
+            </div>
         </div>
     </div>
     <div class="create">
         <div class="form-group">
             <label for="taskName">Название задачи:</label>
             <input type="text" id="taskName" v-model="newTask.title" required>
+            <textarea class="description" rows="10" cols="45" v-model="newTask.description"></textarea>
         </div>
         <button type="submit" v-on:click.prevent="createTask()">Создать задачу</button>
     </div>
@@ -80,7 +91,30 @@ export default defineComponent({
 
 .content {
     max-width: 800px;
-    margin: 20px auto;
+    margin-top: 20px;
+    text-align: left;
+    transition: margin-right 0.3s;
+}
+
+.show-full {
+    margin-right: 300px; /* Измените значение под свои нужды, чтобы окно сдвигалось вправо */
+}
+
+.task-full {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Изначально окно находится за пределами экрана */
+    width: 700px; /* Ширина окна занимает всю доступную ширину */
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.3s;
+}
+
+.show-full .task-full {
+    right: 0; /* Показываем окно справа при активации класса show-full */
 }
 
 h1 {
@@ -106,8 +140,6 @@ h1 {
     text-decoration: none;
     color: #333;
     font-size: 18px;
-    display: flex;
-    align-items: center;
 }
 
 .task-item a:hover {
@@ -145,22 +177,16 @@ h1 {
     border-radius: 4px;
 }
 
-.task-full {
-    margin-top: 20px;
-}
-
 .task-full h1 {
     font-size: 24px;
     color: #333;
 }
-
 
 /*
 CREATE BUTTON
  */
 .create {
     max-width: 400px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;
@@ -169,6 +195,11 @@ CREATE BUTTON
 
 .form-group {
     margin-bottom: 20px;
+}
+
+.description {
+    margin-top: 5px;
+    resize: none;
 }
 
 label {
