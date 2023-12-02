@@ -14,24 +14,36 @@ export default defineComponent({
 
 <template>
     <button class="close-button" @click.stop="closeFullDescription">x</button>
-    <h1>{{ this.$props.fullTask.title }}</h1>
-    <textarea class="description" :value="this.$props.fullTask.description"></textarea>
-    <button>Update</button>
+    <div class="task-container">
+        <h1>{{ this.$props.fullTask.title }}</h1>
+        <p>{{this.$props.fullTask.description}}</p>
+    </div>
 </template>
 
 <style scoped>
-.description{
-    resize: none;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
+.task-container {
+    max-width: 800px;
+    height: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    justify-content: center;
+}
+
+h1 {
     color: #333;
+}
+
+p {
+    color: #555;
 }
 </style>
